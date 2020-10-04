@@ -188,7 +188,11 @@ Response: 200
 ```
 
 ### Database
-H2 is being used as an in-memory database.
+H2 (SQL database) is being used as an in-memory database. This can be easily configured to persist by specifying a backing file path.
+
+**Database Schema**
+![DB Schema](schema.png)
+
 
 #### How is search implemented?
 
