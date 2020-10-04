@@ -12,6 +12,20 @@ This is a demo application with Twitter like functionality. This application is 
 * User can like all the posts/tweets of other user
 * User can log out
 
+### How to run the project
+
+#### Using Intellij
+
+1. Download and install `Intellij`.  
+2. Clone this project
+3. Open/Import the maven project via Intellij
+4. Run to start the serve
+5. Database access: Go to http://localhost:8080/h2-console/ to access database.
+6. To test the api's, start with the `/login` api. Login curl request mentioned below includes sample username/password for an already created user. This will return an `authToken`.
+7. Use this `authToken` to test any other requests (use curl request mentioned below).
+8. POSTMAN API Collection: https://github.com/snoisingla/Twitter/blob/master/Twitter%20Clone.postman_collection.json
+
+
 ### REST APIs
 #### User:
 ##### POST sign-up
@@ -219,16 +233,4 @@ There are two more optimizations that can be done here:
 4. This token is then saved into `AUTH_TOKEN` table with expiry time (set to 7 days) and returned as a response for the `POST /login` call.
 5. For each subsequent call, user needs to send this token as a header. This auth token will be verified along with the expiry time.
 6. When user logs out, authentication token is deleted from the `AUTH_TOKEN` table.
-
-### How to run the project
-
-#### Using Intellij
-
-1. Download and install `Intellij`.  
-2. Clone this project
-3. Open/Import the maven project via Intellij
-4. Run to start the serve
-5. Go to http://localhost:8080/h2-console/ to access database. Username and password is mentioned in `application.properties` file.
-6. To test the api's, start with the `/login` api, using the curl request mentioned above. This will return an `authToken`.
-7. Use this `authToken` to test any other requests (use curl request mentioned above).
 
