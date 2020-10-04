@@ -12,9 +12,6 @@ This is a demo application with Twitter like functionality. This application is 
 * User can like all the posts/tweets of other user
 * User can log out
 
-### Security
-Each API call is authenticated using auth-token. Auth token gets generated when user logs in for the first time.
-
 ### REST APIs
 #### User:
 ##### POST sign-up
@@ -194,7 +191,7 @@ H2 (SQL database) is being used as an in-memory database. This can be easily con
 ![DB Schema](schema.png)
 
 
-#### How is search implemented?
+### How is search implemented?
 
 `GET search-user/{query}` searches for all the users on the handle name as well as the full name.
 
@@ -204,7 +201,7 @@ Search is powered by Apache Lucene which is a high performance search engine lib
 
 Here, we are executing wild card query in hibernate search to fetch all the users where either username or full name contains the `query` text.
 
-#### How is feed implemented?
+### How is feed implemented?
 
 User's feed is computed in these steps:
 1. Find all users which is followed by the given user.
@@ -215,6 +212,14 @@ There are two more optimizations that can be done here:
 1. Support pagination
 2. This feed calculation is very compute intensive and won't scale when there are millions of active users in the system. One way to scale is to keep feed in-memory for a user and whenever a new tweet is posted, this tweet gets added to the feed of all such users who are following it's creator. This will increase the workload when a new tweet gets posted but will reduce the feed generation time.
 
+### How is authentication implemented?
+1. User makes the `POST /login` call with the credentials.
+2. After validating the credentials, new authentication token is generated.
+3. A random string in base64 encoding with 32 characters is generated as the authentication token.
+4. This token is then saved into `AUTH_TOKEN` table with expiry time (set to 7 days) and returned as a response for the `POST /login` call.
+5. For each subsequent call, user needs to send this token as a header. This auth token will be verified along with the expiry time.
+6. When user logs out, authentication token is deleted from the `AUTH_TOKEN` table.
+
 ### How to run the project
 
 #### Using Intellij
@@ -222,5 +227,8 @@ There are two more optimizations that can be done here:
 1. Download and install `Intellij`.  
 2. Clone this project
 3. Open/Import the maven project via Intellij
-4. Run to start the server
+4. Run to start the serve
+5. Go to http://localhost:8080/h2-console/ to access database. Username and password is mentioned in `application.properties` file.
+6. To test the api's, start with the `/login` api, using the curl request mentioned above. This will return an `authToken`.
+7. Use this `authToken` to test any other requests (use curl request mentioned above).
 
