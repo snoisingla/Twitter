@@ -1,10 +1,10 @@
 package com.twitterclone.models;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,13 +26,6 @@ public class User {
 
     @JsonIgnore
     private String password;
-
-//    @ManyToMany(cascade = { CascadeType.ALL })
-//    @JoinTable(name = "likes",
-//            joinColumns = @JoinColumn(name = "userId"),
-//            inverseJoinColumns = @JoinColumn(name = "tweetId"))
-//    @JsonIgnore
-//    private Set<Tweet> likedTweets = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "followers",
@@ -93,14 +86,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    public Set<Tweet> getLikedTweets() {
-//        return likedTweets;
-//    }
-//
-//    public void setLikedTweets(Set<Tweet> likedTweets) {
-//        this.likedTweets = likedTweets;
-//    }
 
     public Set<User> getFriends() {
         return friends;
